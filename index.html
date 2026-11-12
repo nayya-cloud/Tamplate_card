@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#081426">
+<title>Pusat Template</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#081426;
+  --panel:#101f34;
+  --panel2:#142740;
+  --line:#263b55;
+  --text:#edf3fb;
+  --muted:#91a2b8;
+  --accent:#55a6f7;
+  --green:#36c995;
+  --red:#f07171;
+}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.container{
+  width:min(100% - 30px,900px);
+  margin:0 auto;
+  padding:28px 0 50px;
+}
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:25px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo{
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:#193653;
+  color:#7dbdff;
+  font-size:21px;
+}
+.brand h1{
+  margin:0;
+  font-size:21px;
+  letter-spacing:.2px;
+}
+.brand p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
+.add-btn{
+  border:0;
+  background:var(--accent);
+  color:#06172b;
+  font-weight:700;
+  border-radius:9px;
+  padding:11px 15px;
+  font-size:13px;
+  white-space:nowrap;
+}
+.add-btn:hover{filter:brightness(1.1)}
+.search-wrap{
+  position:relative;
+  margin-bottom:19px;
+}
+.search-icon{
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:17px;
+}
+.search{
+  width:100%;
+  height:48px;
+  padding:0 15px 0 43px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  outline:none;
+  background:var(--panel);
+  color:var(--text);
+  font-size:14px;
+}
+.search:focus,.field:focus{
+  border-color:var(--accent);
+}
+.tabs{
+  display:flex;
+  gap:9px;
+  padding-bottom:17px;
+  border-bottom:1px solid var(--line);
+  overflow-x:auto;
+}
+.tab{
+  padding:11px 15px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--panel);
+  color:var(--muted);
+  font-size:13px;
+  white-space:nowrap;
+}
+.tab.active{
+  color:#d9ecff;
+  background:#193653;
+  border-color:#397db9;
+}
+.section-info{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:20px 0 13px;
+}
+.section-info h2{
+  font-size:15px;
+  margin:0;
+}
+.count{
+  color:var(--muted);
+  font-size:12px;
+}
+.template-list{
+  display:grid;
+  gap:12px;
+}
+.template-card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:16px;
+}
+.card-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.card-title{
+  font-size:15px;
+  font-weight:700;
+  margin:0 0 7px;
+  overflow-wrap:anywhere;
+}
+.card-category{
+  display:inline-block;
+  font-size:10px;
+  color:#9bcfff;
+  background:#193653;
+  padding:5px 8px;
+  border-radius:5px;
+}
+.card-content{
+  color:#c0ccda;
+  font-size:13px;
+  line-height:1.65;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  margin:14px 0;
+  max-height:125px;
+  overflow:hidden;
+  position:relative;
+}
+.card-content.expanded{max-height:none}
+.card-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-top:1px solid var(--line);
+  padding-top:12px;
+}
+.card-actions{
+  display:flex;
+  gap:7px;
+}
+.action-btn{
+  border:1px solid var(--line);
+  background:var(--panel2);
+  color:#cbd8e8;
+  border-radius:7px;
+  padding:8px 10px;
+  font-size:12px;
+}
+.action-btn:hover{border-color:#6385a8}
+.copy-btn{
+  border:0;
+  background:#1d4264;
+  color:#b9ddff;
+  border-radius:7px;
+  padding:9px 12px;
+  font-size:12px;
+  font-weight:700;
+}
+.delete-btn{color:#ff9a9a}
+.empty{
+  text-align:center;
+  padding:48px 15px;
+  border:1px dashed var(--line);
+  border-radius:12px;
+  color:var(--muted);
+}
+.empty-icon{font-size:30px;margin-bottom:12px}
+.empty h3{color:var(--text);font-size:15px;margin:0 0 7px}
+.empty p{font-size:12px;margin:0;line-height:1.6}
+.modal-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:10;
+  background:rgba(0,0,0,.7);
+  padding:18px;
+  align-items:center;
+  justify-content:center;
+}
+.modal-backdrop.show{display:flex}
+.modal{
+  width:100%;
+  max-width:480px;
+  background:#101f34;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:21px;
+  max-height:90vh;
+  overflow-y:auto;
+}
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+.modal-header h2{font-size:17px;margin:0}
+.close-btn{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  font-size:24px;
+}
+.form-group{margin-bottom:15px}
+.form-group label{
+  display:block;
+  font-size:12px;
+  color:#b7c6d8;
+  margin-bottom:8px;
+}
+.field{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#0a192b;
+  color:var(--text);
+  padding:12px;
+  outline:none;
+  font-size:13px;
+}
+textarea.field{
+  min-height:155px;
+  resize:vertical;
+  line-height:1.6;
+}
+select.field{color-scheme:dark}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+  margin-top:20px;
+}
+.cancel-btn,.save-btn{
+  border:0;
+  border-radius:8px;
+  padding:11px 17px;
+  font-size:13px;
+  font-weight:700;
+}
+.cancel-btn{
+  background:#24374d;
+  color:#cbd8e8;
+}
+.save-btn{
+  background:var(--accent);
+  color:#07182b;
+}
+.toast{
+  position:fixed;
+  bottom:22px;
+  left:50%;
+  transform:translate(-50%,20px);
+  background:#183c36;
+  border:1px solid #286c5b;
+  color:#a9f2d6;
+  padding:12px 18px;
+  border-radius:9px;
+  font-size:13px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:30;
+  text-align:center;
+  max-width:calc(100% - 30px);
+}
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+@media(max-width:520px){
+  .container{width:calc(100% - 22px);padding-top:20px}
+  .brand h1{font-size:18px}
+  .brand p{font-size:11px}
+  .logo{width:39px;height:39px}
+  .add-btn{padding:10px 11px;font-size:12px}
+  .tab{padding:10px 12px;font-size:12px}
+  .template-card{padding:13px}
+  .card-title{font-size:14px}
+  .card-content{font-size:12px}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <header class="header">
+    <div class="brand">
+      <div class="logo">▤</div>
+      <div>
+        <h1>Pusat Template</h1>
+        <p>Simpan dan kelola pesan template</p>
+      </div>
+    </div>
+    <button class="add-btn" onclick="openModal()">＋ Tambah</button>
+  </header>
+
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input
+      type="search"
+      id="searchInput"
+      class="search"
+      placeholder="Cari judul atau isi template..."
+      oninput="renderTemplates()"
+    >
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-category="resmi" onclick="changeTab('resmi',this)">
+      Template Situs Resmi
+    </button>
+    <button class="tab" data-category="banget" onclick="changeTab('banget',this)">
+      Template Situs Scam
+    </button>
+  </div>
+
+  <div class="section-info">
+    <h2 id="sectionTitle">Template Situs Resmi</h2>
+    <span class="count" id="templateCount">0 template</span>
+  </div>
+
+  <div class="template-list" id="templateList"></div>
+</div>
+
+<!-- Modal tambah/edit -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="backdropClose(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">Tambah Template</h2>
+      <button class="close-btn" onclick="closeModal()">×</button>
+    </div>
+
+    <div class="form-group">
+      <label for="templateTitle">Judul Template</label>
+      <input class="field" id="templateTitle" type="text"
+        placeholder="Contoh: Link, Serius, Informasi">
+    </div>
+
+    <div class="form-group">
+      <label for="templateCategory">Kategori</label>
+      <select class="field" id="templateCategory">
+        <option value="resmi">Template Situs Resmi</option>
+        <option value="banget">Template Situs Scam</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="templateContent">Isi Template</label>
+      <textarea class="field" id="templateContent"
+        placeholder="Tulis isi template di sini..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="cancel-btn" onclick="closeModal()">Batal</button>
+      <button class="save-btn" onclick="saveTemplate()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = "pusatTemplatePromosi_v1";
+
+let templates = loadTemplates();
+let activeCategory = "resmi";
+let editingId = null;
+
+function loadTemplates(){
+  try{
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  }catch(error){
+    return [];
+  }
+}
+
+function saveToStorage(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(templates));
+}
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,char=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[char]);
+}
+
+function changeTab(category,button){
+  activeCategory = category;
+
+  document.querySelectorAll(".tab").forEach(tab=>{
+    tab.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  document.getElementById("sectionTitle").textContent =
+    category === "resmi"
+    ? "Template Situs Resmi"
+    : "Template Scam";
+
+  renderTemplates();
+}
+
+function renderTemplates(){
+  const keyword = document.getElementById("searchInput")
+    .value.trim().toLowerCase();
+
+  const filtered = templates.filter(item=>{
+    const sameCategory = item.category === activeCategory;
+    const matches =
+      item.title.toLowerCase().includes(keyword) ||
+      item.content.toLowerCase().includes(keyword);
+
+    return sameCategory && matches;
+  });
+
+  document.getElementById("templateCount").textContent =
+    filtered.length + " template";
+
+  const list = document.getElementById("templateList");
+
+  if(filtered.length === 0){
+    list.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">▤</div>
+        <h3>Belum ada template</h3>
+        <p>Template yang kamu tambahkan akan muncul di bagian ini.</p>
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = filtered.map(item=>`
+    <article class="template-card">
+      <div class="card-top">
+        <div>
+          <h3 class="card-title">${escapeHTML(item.title)}</h3>
+          <span class="card-category">
+            ${item.category === "resmi"
+              ? "Situs Resmi"
+              : "Situs Scam"}
+          </span>
+        </div>
+      </div>
+
+      <div class="card-content" id="content-${item.id}">${escapeHTML(item.content)}</div>
+
+      <div class="card-bottom">
+        <button class="copy-btn" onclick="copyTemplate('${item.id}')">
+  <svg width="15" height="15" viewBox="0 0 24 24"
+       fill="none" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round">
+    <rect x="8" y="8" width="13" height="13" rx="2"/>
+    <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+  </svg>
+  Salin Teks
+</button>
+
+        <div class="card-actions">
+          <button class="action-btn" onclick="editTemplate('${item.id}')">
+            ✎ Edit
+          </button>
+          <button class="action-btn delete-btn" onclick="deleteTemplate('${item.id}')">
+            Hapus
+          </button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+}
+
+function openModal(){
+  editingId = null;
+  document.getElementById("modalTitle").textContent = "Tambah Template";
+  document.getElementById("templateTitle").value = "";
+  document.getElementById("templateContent").value = "";
+  document.getElementById("templateCategory").value = activeCategory;
+  document.getElementById("modalBackdrop").classList.add("show");
+  setTimeout(()=>document.getElementById("templateTitle").focus(),100);
+}
+
+function closeModal(){
+  document.getElementById("modalBackdrop").classList.remove("show");
+}
+
+function backdropClose(event){
+  if(event.target.id === "modalBackdrop") closeModal();
+}
+
+function saveTemplate(){
+  const title = document.getElementById("templateTitle").value.trim();
+  const content = document.getElementById("templateContent").value.trim();
+  const category = document.getElementById("templateCategory").value;
+
+  if(!title){
+    showToast("Judul template belum diisi");
+    document.getElementById("templateTitle").focus();
+    return;
+  }
+
+  if(!content){
+    showToast("Isi template belum diisi");
+    document.getElementById("templateContent").focus();
+    return;
+  }
+
+  if(editingId){
+    const item = templates.find(x=>x.id === editingId);
+    if(item){
+      item.title = title;
+      item.content = content;
+      item.category = category;
+    }
+    showToast("Template berhasil diperbarui");
+  }else{
+    templates.unshift({
+      id:Date.now().toString(36) + Math.random().toString(36).slice(2,7),
+      title,
+      content,
+      category
+    });
+    showToast("Template berhasil ditambahkan");
+  }
+
+  saveToStorage();
+  activeCategory = category;
+
+  document.querySelectorAll(".tab").forEach(tab=>{
+    tab.classList.toggle("active",tab.dataset.category === category);
+  });
+
+  document.getElementById("sectionTitle").textContent =
+    category === "resmi"
+    ? "Template Situs Resmi"
+    : "Template Situs Scam";
+
+  document.getElementById("searchInput").value = "";
+  closeModal();
+  renderTemplates();
+}
+
+function editTemplate(id){
+  const item = templates.find(x=>x.id === id);
+  if(!item) return;
+
+  editingId = id;
+  document.getElementById("modalTitle").textContent = "Edit Template";
+  document.getElementById("templateTitle").value = item.title;
+  document.getElementById("templateContent").value = item.content;
+  document.getElementById("templateCategory").value = item.category;
+  document.getElementById("modalBackdrop").classList.add("show");
+}
+
+function deleteTemplate(id){
+  const item = templates.find(x=>x.id === id);
+  if(!item) return;
+
+  if(!confirm(`Hapus template "${item.title}"?`)) return;
+
+  templates = templates.filter(x=>x.id !== id);
+  saveToStorage();
+  renderTemplates();
+  showToast("Template berhasil dihapus");
+}
+
+async function copyTemplate(id){
+  const item = templates.find(x=>x.id === id);
+  if(!item) return;
+
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(item.content);
+    }else{
+      fallbackCopy(item.content);
+    }
+    showToast("Teks berhasil disalin");
+  }catch(error){
+    try{
+      fallbackCopy(item.content);
+      showToast("Teks berhasil disalin");
+    }catch(e){
+      showToast("Gagal menyalin teks");
+    }
+  }
+}
+
+function fallbackCopy(text){
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.appendChild(textarea);
+  textarea.select();
+  const success = document.execCommand("copy");
+  textarea.remove();
+  if(!success) throw new Error("Copy failed");
+}
+
+let toastTimer;
+function showToast(message){
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{
+    toast.classList.remove("show");
+  },2200);
+}
+
+document.addEventListener("keydown",event=>{
+  if(event.key === "Escape") closeModal();
+});
+
+renderTemplates();
+</script>
+</body>
+</html>
